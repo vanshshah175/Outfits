@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — OUTFIT AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/wardrobe.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <div class="app-shell">
+      <aside class="app-sidebar" id="app-sidebar">
+        <div>
+          <div class="sidebar-brand-row">
+            <a href="/index.html" class="brand-wordmark">OUTFIT AI</a>
+            <button type="button" class="icon-btn mobile-menu-btn" id="sidebar-close-btn" aria-label="Close navigation">
+              <i data-lucide="x" width="18" height="18"></i>
+            </button>
+          </div>
+          <nav class="sidebar-nav" aria-label="Workspace navigation">
+            <a href="/dashboard.html" class="sidebar-link is-active">
+              <i data-lucide="layout-dashboard" width="18" height="18"></i>
+              <span>Dashboard</span>
+            </a>
+            <a href="/wardrobe.html" class="sidebar-link">
+              <i data-lucide="shirt" width="18" height="18"></i>
+              <span>My Wardrobe</span>
+            </a>
+            <a href="/generate-outfit.html" class="sidebar-link">
+              <i data-lucide="layers" width="18" height="18"></i>
+              <span>Generate Outfit</span>
+            </a>
+            <a href="/saved-outfits.html" class="sidebar-link">
+              <i data-lucide="bookmark" width="18" height="18"></i>
+              <span>Saved Outfits</span>
+            </a>
+            <a href="/profile.html" class="sidebar-link">
+              <i data-lucide="user" width="18" height="18"></i>
+              <span>Profile &amp; Settings</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-user-chip">
+            <div class="sidebar-avatar" id="sidebar-avatar">U</div>
+            <div class="sidebar-user-meta">
+              <div class="sidebar-user-name" id="sidebar-user-name">Loading...</div>
+              <div class="sidebar-user-email" id="sidebar-user-email"></div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" style="justify-content:flex-start;" data-logout-btn>
+            <i data-lucide="log-out" width="16" height="16"></i>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </aside>
+
+      <div class="app-main">
+        <header class="app-topbar">
+          <div class="topbar-left">
+            <button type="button" class="icon-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="Open navigation">
+              <i data-lucide="menu" width="18" height="18"></i>
+            </button>
+            <h1 class="page-title">Dashboard</h1>
+          </div>
+          <div class="topbar-actions">
+            <button type="button" class="icon-btn" data-theme-toggle aria-label="Toggle theme"></button>
+            <a href="/wardrobe.html" class="btn btn-primary btn-sm">
+              <i data-lucide="plus" width="16" height="16"></i>
+              <span>Add Garment</span>
+            </a>
+          </div>
+        </header>
+
+        <main class="app-content">
+          <section class="welcome-banner">
+            <div>
+              <h2 id="dashboard-welcome-name">Welcome back</h2>
+              <p>Review your digital closet inventory or launch an occasion-matched outfit session in seconds.</p>
+            </div>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <a href="/generate-outfit.html" class="btn btn-primary">Generate Outfit</a>
+              <a href="/wardrobe.html" class="btn btn-secondary">Browse Wardrobe</a>
+            </div>
+          </section>
+
+          <section class="kpi-grid" aria-label="Wardrobe metrics">
+            <div class="kpi-card">
+              <div class="kpi-label">Total Wardrobe Items</div>
+              <div class="kpi-value tabular-nums" id="stat-total-wardrobe">0</div>
+              <div class="kpi-foot">Synced in Firestore</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Saved Outfits</div>
+              <div class="kpi-value tabular-nums" id="stat-saved-outfits">0</div>
+              <div class="kpi-foot">Pinned combinations</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Active Categories</div>
+              <div class="kpi-value tabular-nums" id="stat-categories-count">0</div>
+              <div class="kpi-foot">Out of 10 garment types</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Color Palette Depth</div>
+              <div class="kpi-value tabular-nums" id="stat-colors-count">0</div>
+              <div class="kpi-foot">Distinct garment tones</div>
+            </div>
+          </section>
+
+          <section class="dashboard-split">
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Quick Outfit Generator</h2>
+              </div>
+              <div style="margin-bottom:16px;">
+                <span class="form-label" style="display:block; margin-bottom:8px;">Campus Quick Presets</span>
+                <div class="segmented-tabs" id="campus-presets-bar">
+                  <button type="button" class="segmented-btn" data-preset-occ="College / University" data-preset-style="Casual">Daily Lectures</button>
+                  <button type="button" class="segmented-btn" data-preset-occ="Formal Meeting" data-preset-style="Formal">Viva / Presentation</button>
+                  <button type="button" class="segmented-btn" data-preset-occ="Festival" data-preset-style="Streetwear">College Fest</button>
+                  <button type="button" class="segmented-btn" data-preset-occ="Interview" data-preset-style="Formal">Placement Interview</button>
+                  <button type="button" class="segmented-btn" data-preset-occ="Gym / Workout" data-preset-style="Casual">Sports / Gym</button>
+                </div>
+              </div>
+              <form id="quick-generator-form">
+                <div class="quick-form-grid">
+                  <div class="form-group" style="grid-column: 1 / -1;">
+                    <label for="quick-occasion" class="form-label">Select Occasion</label>
+                    <select id="quick-occasion" class="form-control">
+                      <option value="College / University">College / University</option>
+                      <option value="Office / Professional">Office / Professional</option>
+                      <option value="Casual Outing">Casual Outing</option>
+                      <option value="Party">Party</option>
+                      <option value="Date Night">Date Night</option>
+                      <option value="Wedding">Wedding</option>
+                      <option value="Birthday">Birthday</option>
+                      <option value="Gym / Workout">Gym / Workout</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Festival">Festival</option>
+                      <option value="Formal Meeting">Formal Meeting</option>
+                      <option value="Interview">Interview</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="quick-weather" class="form-label">Weather</label>
+                    <select id="quick-weather" class="form-control">
+                      <option value="Normal">Normal</option>
+                      <option value="Hot">Hot</option>
+                      <option value="Cold">Cold</option>
+                      <option value="Rainy">Rainy</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="quick-style" class="form-label">Preferred Style</label>
+                    <select id="quick-style" class="form-control">
+                      <option value="Casual">Casual</option>
+                      <option value="Formal">Formal</option>
+                      <option value="Streetwear">Streetwear</option>
+                      <option value="Traditional">Traditional</option>
+                      <option value="Smart Casual">Smart Casual</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-accent" style="width:100%;">
+                  <span>Recommend Outfits Now</span>
+                  <i data-lucide="arrow-right" width="16" height="16"></i>
+                </button>
+              </form>
+            </div>
+
+            <div class="surface-panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Wardrobe Inventory</h2>
+                <a href="/wardrobe.html" class="text-link">Manage all</a>
+              </div>
+              <div id="wardrobe-breakdown" class="category-breakdown-list">
+                <p style="color:var(--text-muted); margin:0;">Loading inventory...</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="panel-header">
+              <h2 class="panel-title">Recent Outfits</h2>
+              <a href="/saved-outfits.html" class="text-link">View all saved</a>
+            </div>
+            <div class="outfits-grid" id="recent-outfits-grid">
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script type="module" src="/js/dashboard.js"></script>
+  </body>
+</html>

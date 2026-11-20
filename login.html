@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In — OUTFIT AI</title>
+    <meta name="description" content="Sign in to your personal OUTFIT AI digital wardrobe using your User ID and Password." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body>
+    <main class="auth-page">
+      <aside class="auth-visual-col">
+        <img
+          src="/src/assets/images/hero_atelier_wardrobe_1794812797939.jpg"
+          alt="Minimalist luxury wardrobe rack"
+          class="auth-visual-bg"
+          referrerpolicy="no-referrer"
+        />
+        <div class="auth-visual-scrim"></div>
+        <div class="auth-visual-content">
+          <a href="/index.html" class="brand-wordmark">OUTFIT AI</a>
+        </div>
+        <div class="auth-visual-content auth-visual-quote">
+          <h2>Your closet holds more outfits than you think.</h2>
+          <p>Sign in with your User ID and password to access your garments, saved combinations, and occasion styling engine.</p>
+        </div>
+      </aside>
+
+      <section class="auth-form-col">
+        <div class="form-row-between" style="margin-bottom:28px;">
+          <a href="/index.html" class="brand-wordmark" style="font-size:1.25rem;">OUTFIT AI</a>
+          <button type="button" class="icon-btn" data-theme-toggle aria-label="Toggle theme"></button>
+        </div>
+
+        <div class="auth-header">
+          <h1>Welcome back</h1>
+          <p>Enter your User ID and password to open your wardrobe.</p>
+        </div>
+
+        <div id="auth-feedback" class="alert-box alert-error hidden" style="margin-bottom:18px;" role="alert"></div>
+
+        <form id="login-form" class="form-stack" novalidate>
+          <div class="form-group">
+            <label for="login-userid" class="form-label">User ID</label>
+            <input
+              type="text"
+              id="login-userid"
+              class="form-control"
+              placeholder="e.g., aarav_07"
+              required
+              minlength="3"
+              maxlength="40"
+              autocomplete="username"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="login-password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="login-password"
+              class="form-control"
+              placeholder="Enter your password"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+
+          <button type="submit" id="login-submit-btn" class="btn btn-primary" style="width:100%;">
+            Sign In
+          </button>
+
+          <p style="text-align:center; font-size:0.875rem; color:var(--text-secondary); margin-top:8px;">
+            New to OUTFIT AI? <a href="/signup.html" class="text-link">Create a User ID</a>
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <script type="module" src="/js/auth.js"></script>
+  </body>
+</html>

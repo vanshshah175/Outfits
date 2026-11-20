@@ -1,0 +1,271 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Private user account profile and styling defaults.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the user.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "loginId": {
+          "type": "string",
+          "description": "Unique User ID chosen for login.",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[a-zA-Z0-9_.\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Internal auth identifier or optional contact email.",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "profileImage": {
+          "type": "string",
+          "description": "URL or compressed avatar image for user profile.",
+          "maxLength": 300000
+        },
+        "defaultStyle": {
+          "type": "string",
+          "description": "Preferred default styling direction.",
+          "enum": ["Casual", "Formal", "Streetwear", "Traditional", "Smart Casual"]
+        },
+        "defaultWeather": {
+          "type": "string",
+          "description": "Preferred default climate setting.",
+          "enum": ["Normal", "Hot", "Cold", "Rainy"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp."
+        }
+      },
+      "required": ["userId", "name", "loginId", "createdAt", "updatedAt"]
+    },
+    "WardrobeItem": {
+      "title": "WardrobeItem",
+      "description": "A personal clothing or accessory item uploaded to the user's digital wardrobe.",
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "string",
+          "description": "Unique document ID for the wardrobe item.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "itemName": {
+          "type": "string",
+          "description": "Short descriptive title of the garment.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "category": {
+          "type": "string",
+          "description": "Garment category.",
+          "enum": [
+            "Shirts",
+            "T-Shirts",
+            "Jeans",
+            "Trousers",
+            "Shorts",
+            "Jackets",
+            "Hoodies",
+            "Shoes",
+            "Watches",
+            "Accessories"
+          ]
+        },
+        "color": {
+          "type": "string",
+          "description": "Primary color of the item.",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "style": {
+          "type": "string",
+          "description": "Aesthetic style classification.",
+          "enum": ["Casual", "Formal", "Streetwear", "Traditional", "Smart Casual"]
+        },
+        "season": {
+          "type": "string",
+          "description": "Ideal season or climate suitability.",
+          "enum": ["All Season", "Summer", "Winter", "Monsoon", "Spring", "Autumn"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional fit, fabric, or styling notes.",
+          "maxLength": 500
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Firebase Storage download URL or compressed fallback data URL.",
+          "minLength": 1,
+          "maxLength": 300000
+        },
+        "storagePath": {
+          "type": "string",
+          "description": "Firebase Storage object path for cleanup on delete.",
+          "maxLength": 300
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp."
+        }
+      },
+      "required": [
+        "itemId",
+        "userId",
+        "itemName",
+        "category",
+        "color",
+        "style",
+        "season",
+        "imageUrl",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Outfit": {
+      "title": "Outfit",
+      "description": "A generated or saved outfit combination composed from the user's wardrobe items.",
+      "type": "object",
+      "properties": {
+        "outfitId": {
+          "type": "string",
+          "description": "Unique document ID for the outfit.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "description": "Editorial look title.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "occasion": {
+          "type": "string",
+          "description": "Target occasion for this combination.",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "weather": {
+          "type": "string",
+          "description": "Selected weather condition.",
+          "enum": ["Normal", "Hot", "Cold", "Rainy"]
+        },
+        "style": {
+          "type": "string",
+          "description": "Selected style direction.",
+          "enum": ["Casual", "Formal", "Streetwear", "Traditional", "Smart Casual"]
+        },
+        "clothingItemIds": {
+          "type": "array",
+          "description": "Array of WardrobeItem IDs included in the outfit (max 10)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Style overview and editorial summary.",
+          "minLength": 1,
+          "maxLength": 800
+        },
+        "colorHarmony": {
+          "type": "string",
+          "description": "Explanation of how item colors pair together.",
+          "maxLength": 400
+        },
+        "whyItWorks": {
+          "type": "string",
+          "description": "Occasion and weather rationale for the combination.",
+          "maxLength": 600
+        },
+        "isFavorite": {
+          "type": "boolean",
+          "description": "Whether the outfit is pinned to Saved Outfits."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp."
+        }
+      },
+      "required": [
+        "outfitId",
+        "userId",
+        "title",
+        "occasion",
+        "weather",
+        "style",
+        "clothingItemIds",
+        "description",
+        "isFavorite",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Private user profile documents strictly accessible only by the owning user."
+    },
+    "/wardrobe/{itemId}": {
+      "schema": {
+        "$ref": "#/entities/WardrobeItem"
+      },
+      "description": "User-owned wardrobe items queried by userId."
+    },
+    "/outfits/{outfitId}": {
+      "schema": {
+        "$ref": "#/entities/Outfit"
+      },
+      "description": "User-owned generated and saved outfit combinations queried by userId."
+    }
+  }
+}

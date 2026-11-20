@@ -1,0 +1,6 @@
+{
+  "name": "OUTFIT AI",
+  "description": "Smart personal wardrobe organizer and occasion-based outfit recommendation studio built with Vanilla JS and Firebase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

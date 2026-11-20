@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OUTFIT AI — Personal Wardrobe &amp; Occasion Outfit Studio</title>
+    <meta
+      name="description"
+      content="Smart personal wardrobe organizer and occasion-based outfit recommendation studio built with Vanilla JS and Firebase."
+    />
+    <meta property="og:title" content="OUTFIT AI — Personal Wardrobe &amp; Occasion Outfit Studio" />
+    <meta
+      property="og:description"
+      content="Upload your existing clothes and receive tailored outfit combinations for every occasion without buying anything new."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body>
+    <!-- Strict 3-Zone Top Bar -->
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a href="/index.html" class="brand-wordmark">OUTFIT AI</a>
+
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="#how-it-works" class="site-nav-link">How It Works</a>
+          <a href="#lookbook" class="site-nav-link">Lookbook</a>
+          <a href="#occasions" class="site-nav-link">Occasions</a>
+          <a href="/login.html" class="site-nav-link" id="nav-auth-link">Sign In</a>
+        </nav>
+
+        <div class="header-cta-zone">
+          <button type="button" class="icon-btn" data-theme-toggle aria-label="Toggle theme"></button>
+          <a href="/signup.html" class="btn btn-primary btn-sm" id="nav-primary-cta">Get Started</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <span class="hero-kicker">Campus &amp; Personal Wardrobe Intelligence</span>
+              <h1 class="hero-headline">Dress for every occasion from the wardrobe you already own.</h1>
+              <p class="hero-subcopy">
+                Catalog your shirts, tees, denim, shoes, and watches once. Pick daily lectures, viva presentations, college fests, or placement interviews to generate balanced outfits strictly from your closet.
+              </p>
+              <div class="hero-actions">
+                <a href="/signup.html" class="btn btn-primary" id="hero-primary-cta">
+                  <span>Build Your Wardrobe</span>
+                  <i data-lucide="arrow-right" width="16" height="16"></i>
+                </a>
+                <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+              </div>
+            </div>
+
+            <div class="hero-media-frame">
+              <img
+                src="/src/assets/images/hero_atelier_wardrobe_1794812797939.jpg"
+                alt="Curated neutral wardrobe rack in morning architectural sunlight"
+                referrerpolicy="no-referrer"
+              />
+            </div>
+          </div>
+
+          <div class="hero-metrics-strip">
+            <div class="hero-metric-cell">
+              <div class="hero-metric-value tabular-nums">12</div>
+              <div class="hero-metric-label">Occasion rule profiles</div>
+            </div>
+            <div class="hero-metric-cell">
+              <div class="hero-metric-value tabular-nums">10</div>
+              <div class="hero-metric-label">Garment &amp; accessory categories</div>
+            </div>
+            <div class="hero-metric-cell">
+              <div class="hero-metric-value tabular-nums">4</div>
+              <div class="hero-metric-label">Climate &amp; weather modes</div>
+            </div>
+            <div class="hero-metric-cell">
+              <div class="hero-metric-value tabular-nums">100%</div>
+              <div class="hero-metric-label">Styled from your own items</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works -->
+      <section class="editorial-section" id="how-it-works">
+        <div class="container">
+          <div class="section-header-row">
+            <div>
+              <h2 class="section-heading">Three deliberate steps from closet to ready.</h2>
+              <p class="section-lead">
+                No algorithmic noise or shopping prompts. Just structured organization and practical daily styling.
+              </p>
+            </div>
+          </div>
+
+          <div class="steps-grid">
+            <article class="step-card">
+              <span class="step-index">01. Digitize</span>
+              <h3 class="step-title">Upload Your Real Garments</h3>
+              <p class="step-desc">
+                Photograph and tag your shirts, T-shirts, jeans, trousers, outerwear, shoes, and watches with color, style, and season metadata.
+              </p>
+            </article>
+
+            <article class="step-card">
+              <span class="step-index">02. Configure</span>
+              <h3 class="step-title">Choose Occasion &amp; Weather</h3>
+              <p class="step-desc">
+                Pick from twelve everyday and milestone occasions alongside current weather conditions and your preferred aesthetic direction.
+              </p>
+            </article>
+
+            <article class="step-card">
+              <span class="step-index">03. Wear</span>
+              <h3 class="step-title">Inspect &amp; Save Combinations</h3>
+              <p class="step-desc">
+                Review three to five unique outfit pairings with color harmony notes and occasion rationale, then save favorites for quick access.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Example Lookbook Showcase -->
+      <section class="editorial-section" id="lookbook">
+        <div class="container">
+          <div class="section-header-row">
+            <div>
+              <h2 class="section-heading">Structured combinations across every setting.</h2>
+              <p class="section-lead">
+                Sample editorial assemblies illustrating how OUTFIT AI pairs topwear, bottomwear, footwear, and accessories.
+              </p>
+            </div>
+          </div>
+
+          <div class="lookbook-grid">
+            <article class="lookbook-card">
+              <div class="lookbook-media">
+                <img
+                  src="/src/assets/images/lookbook_casual_minimal_1794812798392.jpg"
+                  alt="Casual college outfit flatlay with ecru tee, black jeans, white sneakers, and steel watch"
+                  referrerpolicy="no-referrer"
+                />
+              </div>
+              <div class="lookbook-body">
+                <div class="meta-line">
+                  <span>College / University</span>
+                  <span aria-hidden="true">&middot;</span>
+                  <span>Normal Weather</span>
+                </div>
+                <h3 class="lookbook-title">Relaxed Campus Uniform</h3>
+                <ul class="lookbook-items">
+                  <li>Heavyweight Ecru T-Shirt</li>
+                  <li>Black Straight-Fit Jeans</li>
+                  <li>White Leather Court Sneakers</li>
+                  <li>Brushed Steel Watch</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="lookbook-card">
+              <div class="lookbook-media">
+                <img
+                  src="/src/assets/images/lookbook_office_tailored_1794812798226.jpg"
+                  alt="Office tailored outfit flatlay with light blue formal shirt, charcoal trousers, and espresso leather shoes"
+                  referrerpolicy="no-referrer"
+                />
+              </div>
+              <div class="lookbook-body">
+                <div class="meta-line">
+                  <span>Office / Professional</span>
+                  <span aria-hidden="true">&middot;</span>
+                  <span>Formal</span>
+                </div>
+                <h3 class="lookbook-title">Tailored Weekday Standard</h3>
+                <ul class="lookbook-items">
+                  <li>Light Blue Poplin Shirt</li>
+                  <li>Charcoal Tailored Trousers</li>
+                  <li>Espresso Leather Derbies</li>
+                  <li>Classic Leather Watch</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="lookbook-card">
+              <div class="lookbook-media">
+                <img
+                  src="/src/assets/images/lookbook_evening_smart_1794812798246.jpg"
+                  alt="Date night evening outfit flatlay with black knit polo, taupe pleated trousers, and suede boots"
+                  referrerpolicy="no-referrer"
+                />
+              </div>
+              <div class="lookbook-body">
+                <div class="meta-line">
+                  <span>Date Night &amp; Party</span>
+                  <span aria-hidden="true">&middot;</span>
+                  <span>Smart Casual</span>
+                </div>
+                <h3 class="lookbook-title">Evening Tonal Pairing</h3>
+                <ul class="lookbook-items">
+                  <li>Black Textured Knit Top</li>
+                  <li>Taupe Pleated Trousers</li>
+                  <li>Suede Desert Boots</li>
+                  <li>Warm Gold Timepiece</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Occasions & Capabilities -->
+      <section class="editorial-section" id="occasions">
+        <div class="container">
+          <div class="bento-features">
+            <div class="bento-panel">
+              <h2 class="section-heading" style="font-size:2rem;">Twelve occasions calibrated out of the box.</h2>
+              <p class="section-lead">
+                Every occasion prioritizes appropriate formality, layering weight, and color balance from your uploaded collection.
+              </p>
+              <div class="occasion-directory-grid">
+                <div class="occasion-directory-item">College / University</div>
+                <div class="occasion-directory-item">Office / Professional</div>
+                <div class="occasion-directory-item">Casual Outing</div>
+                <div class="occasion-directory-item">Party</div>
+                <div class="occasion-directory-item">Date Night</div>
+                <div class="occasion-directory-item">Wedding</div>
+                <div class="occasion-directory-item">Birthday</div>
+                <div class="occasion-directory-item">Gym / Workout</div>
+                <div class="occasion-directory-item">Travel</div>
+                <div class="occasion-directory-item">Festival</div>
+                <div class="occasion-directory-item">Formal Meeting</div>
+                <div class="occasion-directory-item">Interview</div>
+              </div>
+            </div>
+
+            <div class="bento-panel">
+              <h2 class="section-heading" style="font-size:2rem;">Built for daily utility.</h2>
+              <ul class="capability-list">
+                <li>
+                  <strong>Private Cloud Wardrobe</strong>
+                  <span>Each garment photo and attribute is secured strictly to your authenticated Firebase account.</span>
+                </li>
+                <li>
+                  <strong>Color Harmony Rationale</strong>
+                  <span>Every generated combination explains why the selected tones and silhouettes work together.</span>
+                </li>
+                <li>
+                  <strong>Climate-Aware Layering</strong>
+                  <span>Filter effortlessly across Hot, Cold, Rainy, and Normal weather without manual guesswork.</span>
+                </li>
+                <li>
+                  <strong>Zero Duplicate Suggestions</strong>
+                  <span>Request alternative pairings anytime to explore fresh combinations from the pieces you own.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Closing CTA -->
+      <section class="editorial-section">
+        <div class="container">
+          <div class="cta-band">
+            <div>
+              <h2 class="section-heading" style="font-size:2.15rem;">Organize your closet in minutes.</h2>
+              <p class="section-lead">Create a free account to upload your garments and generate tailored outfits today.</p>
+            </div>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <a href="/signup.html" class="btn btn-primary">Create Free Account</a>
+              <a href="/login.html" class="btn btn-secondary">Sign In</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <span>OUTFIT AI &mdash; Personal Wardrobe &amp; Styling Studio</span>
+        <div class="footer-links">
+          <a href="#how-it-works">How It Works</a>
+          <a href="#lookbook">Lookbook</a>
+          <a href="/login.html">Sign In</a>
+          <a href="/signup.html">Create Account</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module">
+      import { onAuthStateChanged } from 'firebase/auth';
+      import { auth, initTheme, initIcons } from '/js/firebase-config.js';
+
+      initTheme();
+      initIcons();
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const navAuth = document.getElementById('nav-auth-link');
+          const navCta = document.getElementById('nav-primary-cta');
+          const heroCta = document.getElementById('hero-primary-cta');
+          if (navAuth) {
+            navAuth.textContent = 'Wardrobe';
+            navAuth.href = '/wardrobe.html';
+          }
+          if (navCta) {
+            navCta.textContent = 'Dashboard';
+            navCta.href = '/dashboard.html';
+          }
+          if (heroCta) {
+            heroCta.href = '/dashboard.html';
+            heroCta.querySelector('span').textContent = 'Open Your Dashboard';
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

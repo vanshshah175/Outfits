@@ -1,0 +1,12 @@
+{
+  "projectId":  "outfit-ai-fa65c",
+  "appId":  "1:767179914311:web:858b034c6f552f845ac562",
+  "apiKey":"AIzaSyCk7MrXTwZcJEzlu-LttWZsamjWIm750zo",
+  "authDomain":  "outfit-ai-fa65c.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket":"outfit-ai-fa65c.firebasestorage.app",
+  "messagingSenderId": "767179914311",
+  "measurementId": "G-398EXQFHRT",
+  "oAuthClientId": "",
+  "recaptchaSiteKey": ""
+}

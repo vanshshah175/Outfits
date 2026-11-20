@@ -1,0 +1,286 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global safety net: default deny everything
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Core helper primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidLoginId(id) {
+      return id is string && id.size() >= 3 && id.size() <= 40 && id.matches('^[a-zA-Z0-9_.\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidStyle(val) {
+      return val is string && val in ['Casual', 'Formal', 'Streetwear', 'Traditional', 'Smart Casual'];
+    }
+
+    function isValidWeather(val) {
+      return val is string && val in ['Normal', 'Hot', 'Cold', 'Rainy'];
+    }
+
+    function isValidCategory(val) {
+      return val is string && val in [
+        'Shirts',
+        'T-Shirts',
+        'Jeans',
+        'Trousers',
+        'Shorts',
+        'Jackets',
+        'Hoodies',
+        'Shoes',
+        'Watches',
+        'Accessories'
+      ];
+    }
+
+    function isValidSeason(val) {
+      return val is string && val in ['All Season', 'Summer', 'Winter', 'Monsoon', 'Spring', 'Autumn'];
+    }
+
+    // Entity validators (no existing()/diff() inside validators so they work on both create and update)
+    function isValidUserProfile(data, pathUserId) {
+      return data.keys().hasAll(['userId', 'name', 'loginId', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly([
+          'userId',
+          'name',
+          'loginId',
+          'email',
+          'profileImage',
+          'defaultStyle',
+          'defaultWeather',
+          'createdAt',
+          'updatedAt'
+        ])
+        && isValidId(data.userId)
+        && data.userId == pathUserId
+        && data.userId == request.auth.uid
+        && data.name is string && data.name.size() >= 1 && data.name.size() <= 80
+        && isValidLoginId(data.loginId)
+        && (!('email' in data) || (data.email is string && data.email.size() <= 160))
+        && (!('profileImage' in data) || (data.profileImage is string && data.profileImage.size() <= 300000))
+        && (!('defaultStyle' in data) || isValidStyle(data.defaultStyle))
+        && (!('defaultWeather' in data) || isValidWeather(data.defaultWeather))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidWardrobeItem(data, pathItemId) {
+      return data.keys().hasAll([
+          'itemId',
+          'userId',
+          'itemName',
+          'category',
+          'color',
+          'style',
+          'season',
+          'imageUrl',
+          'createdAt',
+          'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'itemId',
+          'userId',
+          'itemName',
+          'category',
+          'color',
+          'style',
+          'season',
+          'description',
+          'imageUrl',
+          'storagePath',
+          'createdAt',
+          'updatedAt'
+        ])
+        && isValidId(data.itemId)
+        && data.itemId == pathItemId
+        && isValidId(data.userId)
+        && data.userId == request.auth.uid
+        && data.itemName is string && data.itemName.size() >= 1 && data.itemName.size() <= 100
+        && isValidCategory(data.category)
+        && data.color is string && data.color.size() >= 1 && data.color.size() <= 40
+        && isValidStyle(data.style)
+        && isValidSeason(data.season)
+        && (!('description' in data) || (data.description is string && data.description.size() <= 500))
+        && data.imageUrl is string && data.imageUrl.size() >= 1 && data.imageUrl.size() <= 300000
+        && (!('storagePath' in data) || (data.storagePath is string && data.storagePath.size() <= 300))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidOutfit(data, pathOutfitId) {
+      return data.keys().hasAll([
+          'outfitId',
+          'userId',
+          'title',
+          'occasion',
+          'weather',
+          'style',
+          'clothingItemIds',
+          'description',
+          'isFavorite',
+          'createdAt',
+          'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'outfitId',
+          'userId',
+          'title',
+          'occasion',
+          'weather',
+          'style',
+          'clothingItemIds',
+          'description',
+          'colorHarmony',
+          'whyItWorks',
+          'isFavorite',
+          'createdAt',
+          'updatedAt'
+        ])
+        && isValidId(data.outfitId)
+        && data.outfitId == pathOutfitId
+        && isValidId(data.userId)
+        && data.userId == request.auth.uid
+        && data.title is string && data.title.size() >= 1 && data.title.size() <= 120
+        && data.occasion is string && data.occasion.size() >= 1 && data.occasion.size() <= 60
+        && isValidWeather(data.weather)
+        && isValidStyle(data.style)
+        && data.clothingItemIds is list
+        && data.clothingItemIds.size() >= 1
+        && data.clothingItemIds.size() <= 10
+        && data.clothingItemIds[0] is string
+        && data.description is string && data.description.size() >= 1 && data.description.size() <= 800
+        && (!('colorHarmony' in data) || (data.colorHarmony is string && data.colorHarmony.size() <= 400))
+        && (!('whyItWorks' in data) || (data.whyItWorks is string && data.whyItWorks.size() <= 600))
+        && data.isFavorite is bool
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    // Users collection (strictly owner-isolated; list disabled)
+    match /users/{userId} {
+      allow get: if isValidId(userId) && isOwner(userId);
+      allow list: if false;
+
+      allow create: if isSignedIn()
+        && isValidId(userId)
+        && isOwner(userId)
+        && isValidUserProfile(incoming(), userId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+
+      allow update: if isSignedIn()
+        && isValidId(userId)
+        && isOwner(userId)
+        && isValidUserProfile(incoming(), userId)
+        && incoming().userId == existing().userId
+        && incoming().loginId == existing().loginId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'name',
+          'email',
+          'profileImage',
+          'defaultStyle',
+          'defaultWeather',
+          'updatedAt'
+        ]);
+
+      allow delete: if isSignedIn() && isValidId(userId) && isOwner(userId);
+    }
+
+    // Wardrobe collection
+    match /wardrobe/{itemId} {
+      allow get: if isSignedIn() && isValidId(itemId) && existing().userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+
+      allow create: if isSignedIn()
+        && isValidId(itemId)
+        && isValidWardrobeItem(incoming(), itemId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+
+      allow update: if isSignedIn()
+        && isValidId(itemId)
+        && existing().userId == request.auth.uid
+        && isValidWardrobeItem(incoming(), itemId)
+        && incoming().itemId == existing().itemId
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'itemName',
+          'category',
+          'color',
+          'style',
+          'season',
+          'description',
+          'imageUrl',
+          'storagePath',
+          'updatedAt'
+        ]);
+
+      allow delete: if isSignedIn() && isValidId(itemId) && existing().userId == request.auth.uid;
+    }
+
+    // Outfits collection
+    match /outfits/{outfitId} {
+      allow get: if isSignedIn() && isValidId(outfitId) && existing().userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+
+      allow create: if isSignedIn()
+        && isValidId(outfitId)
+        && isValidOutfit(incoming(), outfitId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+
+      allow update: if isSignedIn()
+        && isValidId(outfitId)
+        && existing().userId == request.auth.uid
+        && isValidOutfit(incoming(), outfitId)
+        && incoming().outfitId == existing().outfitId
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && (
+          incoming().diff(existing()).affectedKeys().hasOnly(['isFavorite', 'updatedAt']) ||
+          incoming().diff(existing()).affectedKeys().hasOnly([
+            'title',
+            'occasion',
+            'weather',
+            'style',
+            'clothingItemIds',
+            'description',
+            'colorHarmony',
+            'whyItWorks',
+            'isFavorite',
+            'updatedAt'
+          ])
+        );
+
+      allow delete: if isSignedIn() && isValidId(outfitId) && existing().userId == request.auth.uid;
+    }
+  }
+}
